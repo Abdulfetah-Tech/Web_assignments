@@ -53,6 +53,48 @@
             updateDisplay();
         });
     });
-    
+       clearButton.addEventListener('click', () => {
+        clearCalculator();
+        updateDisplay();
+    });
+
+
+    function isNumber(value) {
+        return /[0-9]/.test(value);
+    }
+
+    function isOperator(value) {
+        return ['+', '-', '*', '/'].includes(value);
+    }
+
+    function handleNumber(value) {
+        if (value === '.' && currentInput.includes('.')) {
+            return;
+        }
+
+        if (value === '0' && currentInput === '0') {
+            return;
+        }
+
+        currentInput += value;
+    }
+
+
+    function handleOperator(value) {
+        if (currentInput === '' && previousInput === '') {
+            return;
+        }
+
+        if (currentInput !== '') {
+            if (previousInput !== '') {
+                previousInput = calculate(previousInput, currentInput, operator);
+            } else {
+                previousInput = currentInput;
+            }
+        }
+
+        currentInput = '';
+        operator = value;
+    } 
 </body>
 </html>
